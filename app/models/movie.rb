@@ -16,7 +16,6 @@ class Movie::InvalidKeyError < StandardError ; end
     @search.query(string)
     @matching_movies = @search.fetch 
     movies_hold = Array.new
-
       @matching_movies.each do |movie|
          releases = Tmdb::Movie.releases(movie['id'])
          country_releases = releases['countries']
@@ -32,13 +31,13 @@ class Movie::InvalidKeyError < StandardError ; end
            release_date = 'TBD'
          end
          
-         movie_vals = {
-             :tmdb_id => movie['id'],
-             :rating => rating,
-             :title => movie['title'],
-             :release_date => release_date,
-             :overview => movie['overview']
-         }
+         movie_vals = {}
+         movie_vals[:tmdb_id] = movie['id']
+         movie_vals[:rating] = rating
+         movie_vals[:title] = movie['title']
+         movie_vals[:release_date] = release_date
+         movie_vals[:overview] = movie['overview']
+    
          movies_hold.push(movie_vals)
      end
      movies_hold
@@ -57,11 +56,12 @@ class Movie::InvalidKeyError < StandardError ; end
     else
       rating = 'N/A'
     end
-    new_movie = {
-        :title => title,
-        :release_date => release_date,
-        :rating => rating
-    }
+    
+    new_movie = {}
+    new_movie[:title] = title
+    new_movie[:release_date] = release_date
+    new_movie[:rating] = rating
+
     Movie.create!(new_movie)
   end
 end
