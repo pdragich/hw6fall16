@@ -62,7 +62,19 @@ class MoviesController < ApplicationController
   end
   
   def search_tmdb
+    @search_terms = params[:search_terms]
+    if @search_terms.blank?
+      flash[:alert] = "Invalid search terms"
+      redirect_to movies_path and return
+    end
     @movies=Movie.find_in_tmdb(params[:search_terms])
   end
-
+  
+  def add_movies
+    movie_ids = params[:checkbox].keys
+    movie_ids.each do |movie_id|
+      Movie.add_movies movie_id
+    end
+    redirect_to movies_path
+  end
 end

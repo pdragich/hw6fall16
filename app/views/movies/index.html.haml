@@ -25,4 +25,10 @@
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)
 
+%h4{:style => "color: maroon;"} Search for movie titles containing:
+= form_tag '/movies/search_tmdb', :method => :post, :id => 'search_form' do
+  = text_field_tag :search_terms, params[:search_terms], :id => 'search_box'
+  = submit_tag 'Search TMDb', :id => 'search_button'
+%hr
 = link_to 'Add new movie', new_movie_path
+
