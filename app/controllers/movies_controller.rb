@@ -75,11 +75,16 @@ class MoviesController < ApplicationController
   end
   
   def add_movies
-    movie_ids = params[:checkbox].keys
-    movie_ids.each do |movie_id|
-      Movie.add_movies movie_id
+    if !params[:checkbox].nil? then
+      movie_ids = params[:checkbox].keys
+      movie_ids.each do |movie_id|
+        Movie.add_movies movie_id
+      end
+      flash[:notice] = "Movies successfully added to Rotten Potatoes"
+      redirect_to movies_path
+    else
+      flash[:notice] = "No movies selected"
+      redirect_to movies_path
     end
-    flash[:notice] = "Movies successfully added to Rotten Potatoes"
-    redirect_to movies_path
   end
 end
