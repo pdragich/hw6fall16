@@ -8,9 +8,6 @@ class Movie::InvalidKeyError < StandardError ; end
  def self.find_in_tmdb(string)
    begin
    Tmdb::Api.key("f4702b08c0ac6ea5b51425788bb26562")
-   rescue Tmdb::InvalidApiKeyError
-       raise Movie::InvalidKeyError, 'Invalid API key'
-   end
     @search = Tmdb::Search.new 
     @search.resource('movie')
     @search.query(string)
@@ -41,6 +38,9 @@ class Movie::InvalidKeyError < StandardError ; end
          movies_hold.push(movie_vals)
      end
      movies_hold
+     rescue Tmdb::InvalidApiKeyError
+       raise Movie::InvalidKeyError, 'Invalid API key'
+    end
   end
   
   def self.add_movies(movie_id)
