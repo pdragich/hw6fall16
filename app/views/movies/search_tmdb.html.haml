@@ -14,8 +14,7 @@
           %td= movie[:title]
           %td= movie[:rating]
           %td= movie[:release_date]
-          %td<input id="checkbox_#{movie.id}" name="tmdb_movies[#{movie.id}]" type= "checkbox"/>
-        //   %td= check_box_tag "checkbox[#{movie[:tmdb_id]}]"
+          %td= check_box_tag "checkbox[#{movie[:tmdb_id]}]", :id => 'checkbox_#{movie[:tmdb_id]}'
   
   = submit_tag 'Add Selected Movies'
 = link_to 'Return to Movie List', movies_path
